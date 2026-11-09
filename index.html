@@ -1,11 +1,14 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Estoque -POO</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Cadastro de Produtos</h1>
@@ -36,6 +39,12 @@
             <button id="limpar-tabela" class="btn-danger">Limpar Tudo</button>
         </div>
 
+        <!--Campo de Pesquisa V4-->
+        <div class="form-group">
+            <label for="campo-busca">Pesquisar Produto:</label>
+            <input type="text" id="campo-busca" placeholder="Digite o nome do produto..." />
+        </div>
+
         <!--Tabela de Exibição-->
         <table id="tabela-produtos">
             <thead>
@@ -55,4 +64,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
