@@ -1,3 +1,4 @@
+
 //
 // FASE 1: Modelagem dos dados (Classe Base)
 //
@@ -8,7 +9,6 @@ class Produto {
         this.quantidade = parseInt(quantidade);
     }
 
-    // Método que calcula o subtotal do produto
     calcularSubtotal() {
         return this.preco * this.quantidade;
     }
@@ -24,13 +24,11 @@ const listaDeProdutos = [];
 //
 const CHAVE_STORAGE = "sistema_estoque_produtos";
 
-// 1. Salvar os dados no navegador
 function salvarNoLocalStorage() {
     const listaEmTexto = JSON.stringify(listaDeProdutos);
     localStorage.setItem(CHAVE_STORAGE, listaEmTexto);
 }
 
-// 2. Carregar os dados salvos
 function carregarDoLocalStorage() {
     const dadosSalvos = localStorage.getItem(CHAVE_STORAGE);
 
@@ -55,23 +53,108 @@ function carregarDoLocalStorage() {
 const formProduto = document.getElementById("produto-form");
 const btnLimparTudo = document.getElementById("limpar-tabela");
 const totalEstoqueEl = document.getElementById("total-estoque");
-
-// 🆕 Campo de pesquisa V4
 const campoBusca = document.getElementById("campo-busca");
 
+// Elementos V5
+const mensagemErro = document.getElementById("mensagem-erro");
+
+const modalConfirmacao = document.getElementById("modal-confirmacao");
+const textoConfirmacao = document.getElementById("texto-confirmacao");
+const btnConfirmar = document.getElementById("btn-confirmar");
+const btnCancelar = document.getElementById("btn-cancelar");
+
+const modalBootstrap = document.getElementById("modal-bootstrap");
+const btnBootstrap = document.getElementById("btn-bootstrap");
+const fecharBootstrap = document.getElementById("fechar-bootstrap");
+
+let acaoConfirmacao = null;
+
 //
-// FASE 4: Escuta de Eventos
+// FASE 4: Mensagens e Modais V5
 //
 
-// 1. Adicionar Produto pelo Formulário
+// Mostrar mensagem na página
+function mostrarErro(mensagem) {
+    mensagemErro.textContent = mensagem;
+    mensagemErro.style.display = "block";
+}
+
+// Limpar mensagem
+function limparErro() {
+    mensagemErro.textContent = "";
+    mensagemErro.style.display = "none";
+}
+
+// Abrir modal de confirmação
+function abrirModal(mensagem, acao) {
+    textoConfirmacao.textContent = mensagem;
+    acaoConfirmacao = acao;
+    modalConfirmacao.style.display = "flex";
+}
+
+// Fechar modal
+function fecharModal() {
+    modalConfirmacao.style.display = "none";
+    acaoConfirmacao = null;
+}
+
+// Botão confirmar
+btnConfirmar.addEventListener("click", function () {
+    if (acaoConfirmacao) {
+        const acao = acaoConfirmacao;
+        fecharModal();
+        acao();
+    }
+});
+
+// Botão cancelar
+btnCancelar.addEventListener("click", fecharModal);
+
+// Abrir conceito Bootstrap
+btnBootstrap.addEventListener("click", function () {
+    modalBootstrap.style.display = "flex";
+});
+
+// Fechar conceito Bootstrap
+fecharBootstrap.addEventListener("click", function () {
+    modalBootstrap.style.display = "none";
+});
+
+//
+// FASE 5: Escuta de Eventos
+//
+
+// 1. Adicionar Produto
 formProduto.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const nomeInput = document.getElementById("nome").value;
+    limparErro();
+
+    const nomeInput = document.getElementById("nome").value.trim();
     const precoInput = document.getElementById("preco").value;
     const quantidadeInput = document.getElementById("quantidade").value;
 
-    const novoProduto = new Produto(nomeInput, precoInput, quantidadeInput);
+    // Validação dos dados
+    if (nomeInput === "") {
+        mostrarErro("Digite o nome do produto!");
+        return;
+    }
+
+    if (precoInput === "" || parseFloat(precoInput) <= 0) {
+        mostrarErro("Digite um preço maior que zero!");
+        return;
+    }
+
+    if (quantidadeInput === "" || parseInt(quantidadeInput) <= 0) {
+        mostrarErro("Digite uma quantidade maior que zero!");
+        return;
+    }
+
+    const novoProduto = new Produto(
+        nomeInput,
+        precoInput,
+        quantidadeInput
+    );
 
     listaDeProdutos.push(novoProduto);
 
@@ -81,32 +164,36 @@ formProduto.addEventListener("submit", function (event) {
     formProduto.reset();
 });
 
-// 2. Limpar toda a tabela
+// 2. Limpar toda a tabela com modal
 btnLimparTudo.addEventListener("click", function () {
     if (listaDeProdutos.length === 0) {
-        alert("A tabela já está vazia!");
+        mostrarErro("A tabela já está vazia!");
         return;
     }
 
-    if (confirm("Tem certeza que deseja remover todos os produtos?")) {
-        listaDeProdutos.length = 0;
+    abrirModal(
+        "Tem certeza que deseja remover todos os produtos?",
+        function () {
+            listaDeProdutos.length = 0;
 
-        localStorage.removeItem(CHAVE_STORAGE);
+            localStorage.removeItem(CHAVE_STORAGE);
 
-        atualizarInterface();
-    }
+            atualizarInterface();
+            limparErro();
+        }
+    );
 });
 
-// 🆕 3. Pesquisa em tempo real
+// 3. Pesquisa em tempo real
 campoBusca.addEventListener("input", function () {
     atualizarInterface();
 });
 
 //
-// FASE 5: Funções de Atualização e Renderização da Interface
+// FASE 6: Funções de Atualização e Renderização
 //
 
-// 🆕 1. Função para filtrar os produtos
+// Filtrar produtos
 function obterProdutosFiltrados() {
     const termo = campoBusca.value.toLowerCase().trim();
 
@@ -115,31 +202,35 @@ function obterProdutosFiltrados() {
     });
 }
 
-// 2. Remover um único produto pelo índice
+// Remover produto com modal
 function removerProduto(index) {
-    listaDeProdutos.splice(index, 1);
+    abrirModal(
+        "Deseja realmente excluir este produto?",
+        function () {
+            listaDeProdutos.splice(index, 1);
 
-    salvarNoLocalStorage();
-
-    atualizarInterface();
+            salvarNoLocalStorage();
+            atualizarInterface();
+        }
+    );
 }
 
-// 🆕 3. Calcular o total apenas dos produtos visíveis
+// Calcular total dos produtos visíveis
 function atualizarTotalEstoque(produtosVisiveis) {
     const total = produtosVisiveis.reduce((acc, produto) => {
         return acc + produto.calcularSubtotal();
     }, 0);
 
-    totalEstoqueEl.textContent = `Total em Estoque: R$ ${total.toFixed(2)}`;
+    totalEstoqueEl.textContent =
+        `Total em Estoque: R$ ${total.toFixed(2)}`;
 }
 
-// 4. Renderizar a tabela
+// Renderizar tabela
 function renderizarTabela() {
     const tabelaBody = document.querySelector("#tabela-produtos tbody");
 
     tabelaBody.innerHTML = "";
 
-    // Obtém somente os produtos que correspondem à pesquisa
     const produtosVisiveis = obterProdutosFiltrados();
 
     if (produtosVisiveis.length === 0) {
@@ -170,30 +261,27 @@ function renderizarTabela() {
             </td>
         `;
 
-        // Encontra o índice original do produto na lista
         const indexOriginal = listaDeProdutos.indexOf(produto);
 
         const btnRemover = linha.querySelector(".btn-remover");
 
-        btnRemover.addEventListener("click", () => {
+        btnRemover.addEventListener("click", function () {
             removerProduto(indexOriginal);
         });
 
         tabelaBody.appendChild(linha);
     });
 
-    // Atualiza o total considerando somente os produtos encontrados
     atualizarTotalEstoque(produtosVisiveis);
 }
 
-// 5. Função principal que sincroniza a tela
+// Atualizar interface
 function atualizarInterface() {
     renderizarTabela();
 }
 
 //
-// FASE 6: Inicialização da Aplicação
+// FASE 7: Inicialização
 //
-
 carregarDoLocalStorage();
 atualizarInterface();

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Estoque -POO</title>
+    <title>Sistema de Estoque - POO</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,7 +13,14 @@
     <div class="container">
         <h1>Cadastro de Produtos</h1>
 
-        <!--Formulário de Entrada-->
+        <button id="btn-bootstrap" type="button">
+            Ver Conceito Bootstrap
+        </button>
+
+        <div class="foto-perfil">
+            <img src="ray.jpg.jpeg" alt="foto.jpg">
+        </div>
+
         <form id="produto-form">
             <div class="form-group">
                 <label for="nome">Nome do Produto:</label>
@@ -21,7 +28,7 @@
             </div>
 
             <div class="form-group">
-                <label for="preco">Preço (R$:)</label>
+                <label for="preco">Preço (R$):</label>
                 <input type="number" id="preco" step="0.01" placeholder="Ex. 3500.00" required />
             </div>
 
@@ -30,22 +37,27 @@
                 <input type="number" id="quantidade" placeholder="Ex. 5" required />
             </div>
 
-            <button type="submit" class="btn-primary"> Adicionar Produto</button>
+            <button type="submit" class="btn-primary">Adicionar Produto</button>
+
+            <!-- Mensagem de erro V5 -->
+            <div id="mensagem-erro"></div>
         </form>
 
-        <!--Cabeçalho de Ações e Resumo-->
+        <!-- Cabeçalho de Ações e Resumo -->
         <div class="resumo-container">
             <h3 id="total-estoque">Total em Estoque: R$0,00</h3>
-            <button id="limpar-tabela" class="btn-danger">Limpar Tudo</button>
+            <button id="limpar-tabela" class="btn-danger" type="button">
+                Limpar Tudo
+            </button>
         </div>
 
-        <!--Campo de Pesquisa V4-->
+        <!-- Campo de Pesquisa V4 -->
         <div class="form-group">
             <label for="campo-busca">Pesquisar Produto:</label>
             <input type="text" id="campo-busca" placeholder="Digite o nome do produto..." />
         </div>
 
-        <!--Tabela de Exibição-->
+        <!-- Tabela de Exibição -->
         <table id="tabela-produtos">
             <thead>
                 <tr>
@@ -57,9 +69,43 @@
                 </tr>
             </thead>
             <tbody>
-                <!--As linha da tabela serão inserida pelo Js-->
+                <!-- As linhas da tabela serão inseridas pelo JS -->
             </tbody>
         </table>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="modal-confirmacao" class="modal">
+        <div class="modal-conteudo">
+            <h2>Confirmar ação</h2>
+            <p id="texto-confirmacao">Deseja realmente continuar?</p>
+
+            <button id="btn-confirmar" type="button">Confirmar</button>
+            <button id="btn-cancelar" type="button">Cancelar</button>
+        </div>
+    </div>
+    <div id="modal-bootstrap" class="modal">
+        <div class="modal-conteudo">
+            <h2>Conceito Bootstrap</h2>
+
+            <p>
+                Bootstrap é um framework front-end que facilita
+                a criação de sites e sistemas.
+            </p>
+
+            <p>
+                Ele oferece componentes prontos, como botões,
+                formulários, tabelas, menus e janelas modais.
+            </p>
+
+            <p>
+
+                <button id="fechar-bootstrap">Fechar</button>
+        </div>
+    </div>
+
+    <button id="fechar-bootstrap" type="button">Fechar</button>
+    </div>
     </div>
 
     <script src="script.js"></script>

@@ -1,16 +1,16 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body{
+body {
     font-family: Arial, sans-serif;
     background-image: url(foto.jpg);
     padding: 20px;
 }
 
-.container{
+.container {
     max-width: 650px;
     background-color: #491316;
     margin: 30px auto;
@@ -20,46 +20,44 @@ body{
     box-shadow: 0 8px 32px rgb(255, 110, 110);
 }
 
-
-
-h1{
+h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #fff;
 }
 
-form{
+form {
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-bottom: 25px;
 }
 
-.form-group{
+.form-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-label{
+label {
     font-weight: bold;
     font-size: 14px;
     color: #fff;
 }
 
-input{
+input {
     padding: 10px;
     border: 1px solid #441414;
     border-radius: 4px;
     font-size: 16px;
 }
 
-input:focus{
+input:focus {
     outline: none;
     border-color: #360f0f;
 }
 
-button{
+button {
     padding: 10px 15px;
     background-color: #360f0f;
     font-size: 15px;
@@ -67,29 +65,29 @@ button{
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: 0,2s;
+    transition: 0.2s;
     color: #fff;
 }
 
-.btn-primary{
+.btn-primary {
     background-color: #360f0f;
     color: #fff;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background-color: #682c2c;
 }
 
-.btn-danger{
+.btn-danger {
     background-color: #360f0f;
-    color: rgba(255, 245, 245, 0.959)
+    color: rgba(255, 245, 245, 0.959);
 }
 
-.btn-danger:hover{
+.btn-danger:hover {
     background-color: #682c2c;
 }
 
-.resumo-container{
+.resumo-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -98,41 +96,163 @@ button{
     border-top: 2px solid #fff;
 }
 
-#total-estoque{
+#total-estoque {
     font-size: 18px;
-    color: #fff
+    color: #fff;
 }
 
-table{
+table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
 }
 
-th, td{
+th,
+td {
     border: 1px solid #682c2c;
     padding: 10px;
     text-align: center;
     color: #fff;
 }
 
-th{
+th {
     background-color: #360f0f;
     color: white;
 }
 
-tbody tr:nth-child(even){
+tbody tr:nth-child(even) {
     background-color: #360f0f;
-
 }
 
-.btn-remover{
+.btn-remover {
     background-color: #360f0f;
     color: white;
     padding: 5px 10px;
     font-size: 12px;
 }
 
-.btn-remover:hover{
+.btn-remover:hover {
     background-color: #682c2c;
+}
+
+/* BOTÃO VER CONCEITO BOOTSTRAP */
+#btn-bootstrap {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #360f0f;
+    color: #fff;
+}
+
+#btn-bootstrap:hover {
+    background-color: #682c2c;
+}
+
+/* MENSAGEM DE ERRO */
+#mensagem-erro {
+    display: none;
+    background-color: #ffe5e5;
+    color: #491316;
+    border: 1px solid rgb(255, 110, 110);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* FUNDO DOS MODAIS */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* CONTEÚDO DOS MODAIS */
+.modal-conteudo {
+    background-color: #491316;
+    color: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgb(44, 10, 10);
+    box-shadow: 0 8px 32px rgb(255, 110, 110);
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+}
+
+.modal-conteudo h2 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.modal-conteudo p {
+    color: #fff;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* BOTÕES DOS MODAIS */
+#btn-confirmar,
+#btn-cancelar,
+#fechar-bootstrap {
+    background-color: #360f0f;
+    color: #fff;
+    margin: 5px;
+}
+
+#btn-confirmar:hover,
+#btn-cancelar:hover,
+#fechar-bootstrap:hover {
+    background-color: #682c2c;
+}
+
+
+#campo-busca {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    .resumo-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 6px;
+    }
+}
+
+.foto-perfil {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 15px auto 25px;
+    border: 2px solid #270404;
+}
+
+.foto-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
